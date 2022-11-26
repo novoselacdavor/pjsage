@@ -130,3 +130,51 @@ add_action('after_setup_theme', function () {
         return "<?= " . __NAMESPACE__ . "\\asset_path({$asset}); ?>";
     });
 });
+
+/*
+    For the sake of test project do it here, later on delete it and place it inside helpers
+    This is done only for 1 acf block, we will change this later on
+*/
+if( function_exists('acf_register_block_type') ) {
+    add_action('acf/init', function() {
+        acf_register_block_type( array(
+            'name'              => 'hero',
+            'title'             => __( 'Hero', 'heroblock' ),
+            'render_callback'   => '\App\acf_block_render_callback',
+            'category'          => 'pjs-blocks',
+            'icon'              => 'book-alt',
+            'mode'              => 'edit',
+            'keywords'          => array( 'hero', 'header' )
+        ));
+    });
+}
+
+add_filter( 'block_categories', function( $categories, $post ){
+    return array_merge(
+        $categories,
+        array(
+            array(
+                'slug'  => 'pjs-blocks',
+                'title' => __( 'PJSage Blocks', 'pjs-blocks' ),
+            ),
+        )
+    );
+}, 10, 2);
+
+/*
+    Creating 1 block patter for this particular test, also needs to be elsewhere and not here
+*/
+
+function pjs_block_patterns_reg() {
+    
+}
+add_action( 'init', function(){
+    register_block_pattern(
+        'pjs-pattern/three-col-cards',
+        array(
+            'title'       => __( 'Three Col Cards', 'pjs' ),
+            'description' => _x( 'Three columns with cards', 'Block pattern description', 'pjs' ),
+            'content'     => template('block-patterns/three-col-cards'),
+        )
+    );
+});

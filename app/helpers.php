@@ -136,3 +136,24 @@ function display_sidebar()
     isset($display) || $display = apply_filters('sage/display_sidebar', false);
     return $display;
 }
+
+function acf_block_render_callback($block) {
+    $slug = str_replace('acf/', '', $block['name']);
+    $classes = [$slug];
+    
+    $id = sprintf('%s-%s', $slug, $block['id']);
+    if(!empty($block['anchor']))
+        $id = $block['anchor'];
+    
+    if (!empty($block['className']))
+        $classes[] = $block['className'];
+    
+    if (!empty($block['align']))
+        $classes[] = $block['align'];
+    
+    $block['className'] = implode(' ', $classes);
+
+    $object = json_decode(json_encode($block), FALSE);
+    
+    echo template("blocks/${slug}", ['block' => $object]);
+}
