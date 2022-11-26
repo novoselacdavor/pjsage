@@ -1,5 +1,3 @@
-$pjs_green: #7AAB32;
-
 .pjs-three-col-cards {
 	padding: 3rem 0;
 
@@ -7,19 +5,40 @@ $pjs_green: #7AAB32;
 		padding: 6rem 0;
 	}
 
+	h3,
+	p {
+		color: #1a1a1a;
+	}
+
 	h3 {
 		font-weight: 700;
+	}
+
+	p {
+		margin-bottom: 1.5rem;
+	}
+
+	.wp-block-column {
+		display: flex;
+		flex-direction: column;
+		padding-bottom: 2rem;
+		border-bottom: 2px solid #ddd;
+	}
+
+	.wp-block-buttons {
+		margin-top: auto;
 	}
 
 	.wp-block-button {
 
 		&__link {
-
+			font-weight: 500;
 			background-color: $pjs_green !important;
 			color: var(--white) !important;
 			transition: all 0.3s ease-in-out;
 			border-color: $pjs_green;
 			padding: 0.5rem 1rem !important;
+			letter-spacing: 1px;
 
 			&:hover {
 				text-decoration: none;

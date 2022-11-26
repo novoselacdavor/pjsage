@@ -1,4 +1,6 @@
 .banner {
+    position: relative;
+    z-index: 9;
 
     &__inner {
         display: grid;
@@ -24,6 +26,25 @@
     }
 
     &__hamburger {
+        margin-left: 2rem;
+
+        &.open {
+
+            span {
+                opacity: 1;
+                transform: rotate(45deg) translate(0px, 1px);
+                background: #232323;
+
+                &:nth-last-of-type(2) {
+                    transform: rotate(-45deg) translate(-9px, 9px);
+                }
+
+                &:last-of-type {
+                    opacity: 0;
+                    transform: rotate(0deg) scale(0.2, 0.2);
+                }
+            }
+        }
 
         span {
             display: block;
@@ -33,7 +54,10 @@
             position: relative;
             background: #1a1a1a;
             border-radius: 3px;
-            margin-left: 2rem;
+            transform-origin: 4px 0px;
+            transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0),
+                        background 0.5s cubic-bezier(0.77,0.2,0.05,1.0),
+                        opacity 0.55s ease;
 
             &:first-of-type {
                 transform-origin: 0% 0%;
@@ -59,14 +83,66 @@
         }
     }
 
+    .nav-primary {
+        position: absolute;
+        background-color: var(--white);
+        top: 100%;
+        right: -100%;
+        width: 100%;
+        padding: 1rem 0;
+        transition: right 0.3s ease-in-out;
+
+        &.open {
+            right: 0;
+        }
+    }
+
     .nav {
+        flex-direction: column;
+
+        @include media-breakpoint-up(sm) {
+            flex-direction: row;
+        }
 
         li {
             @extend .nav-item;
+
+            &:not(:first-of-type) {
+
+                @include media-breakpoint-up(sm) {
+                    margin-left: 1rem;
+                }
+            }
         }
 
         a {
             @extend .nav-link;
+            position: relative;
+            padding: 0.5rem 0;
+            color: var(--black);
+            transition: all 0.3s ease-in-out;
+
+            &:hover {
+                color: $pjs_green;
+
+                &:after {
+                    width: 100%;
+                    left: 0;
+                }
+            }
+
+            &:after {
+                content: "";
+                background: none repeat scroll 0 0 transparent;
+                bottom: 0;
+                display: block;
+                height: 2px;
+                left: 50%;
+                position: absolute;
+                background: $pjs_green;
+                transition: width 0.3s ease 0s, left 0.3s ease 0s;
+                width: 0;
+            }
         }
     }
 }
